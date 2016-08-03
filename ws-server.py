@@ -2,6 +2,25 @@
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 import sys
 import webiopi
+import json
+
+menus = [
+    {
+        "name": "Orange",
+        "price": 120,
+        "value": 5,
+    },
+    {
+        "name": "Cider",
+        "price": 100,
+        "value": 4,
+    },
+    {
+        "name": "RedBull",
+        "price": 200,
+        "value": 15,
+    },
+]
 
 webiopi.setDebug()
 
@@ -80,6 +99,9 @@ class Server(WebSocket):
             ChangeDriveMode('3')
         elif str == 'left':
             ChangeDriveMode('4')
+        elif str == 'list':
+            self.sendMessage(json.dumps(menus))
+            return
         else:
             self.sendMessage('Command not found: ' + str)
             return
