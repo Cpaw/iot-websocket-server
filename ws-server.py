@@ -4,24 +4,6 @@ import sys
 import webiopi
 import json
 
-menus = [
-    {
-        "name": "Orange",
-        "price": 120,
-        "value": 5,
-    },
-    {
-        "name": "Cider",
-        "price": 100,
-        "value": 4,
-    },
-    {
-        "name": "RedBull",
-        "price": 200,
-        "value": 15,
-    },
-]
-
 webiopi.setDebug()
 
 PIN_L1 = 6
@@ -100,7 +82,7 @@ class Server(WebSocket):
         elif str == 'left':
             ChangeDriveMode('4')
         elif str == 'list':
-            self.sendMessage(json.dumps(menus))
+            self.sendMessage(''.join(open('./menu.json', 'r').readlines()))
             return
         else:
             self.sendMessage('Command not found: ' + str)
