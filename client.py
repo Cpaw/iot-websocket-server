@@ -2,8 +2,13 @@
 from websocket import create_connection
 from IPython import embed
 from IPython.terminal.embed import InteractiveShellEmbed
+import sys
 
-ws = create_connection("ws://172.16.42.34:7000")
+if len(sys.argv) < 2:
+    print(sys.argv[0] + " <Address>:<Port>")
+    sys.exit()
+
+ws = create_connection("ws://%s" % sys.argv[1])
 str = ' '
 while str != '':
     str = input()
