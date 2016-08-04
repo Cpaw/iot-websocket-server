@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
+import sys
 import webiopi
 
 webiopi.setDebug()
@@ -93,5 +94,11 @@ class Server(WebSocket):
 ChangeDriveMode("0")
 ChangeVoltageLevel("5")
 
-server = SimpleWebSocketServer('', 7000, Server)
+if 2 <= len(sys.argv):
+    port = int(sys.argv[1])
+else:
+    port = 7000
+
+print(port)
+server = SimpleWebSocketServer('', port, Server)
 server.serveforever()
