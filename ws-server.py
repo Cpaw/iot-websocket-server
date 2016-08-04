@@ -82,9 +82,9 @@ class Server(WebSocket):
             ChangeDriveMode('1')
         elif str == 'back':
             ChangeDriveMode('2')
-        elif str == 'left':
-            ChangeDriveMode('3')
         elif str == 'right':
+            ChangeDriveMode('3')
+        elif str == 'left':
             ChangeDriveMode('4')
         else:
             self.sendMessage('Not found: ' + str)
