@@ -37,23 +37,23 @@ def MotorDrive(iIn1Pin, iIn2Pin, percentage):
 
 @webiopi.macro
 def ChangeDriveMode(mode):
-    if mode == "0":
+    if mode == 0:
         webiopi.debug("ChangeDriveMode : Stop")
         MotorDrive(PIN_L1, PIN_L2, 0);
         MotorDrive(PIN_R1, PIN_R2, 0);
-    elif mode == "1":
+    elif mode == 1:
         webiopi.debug("ChangeDriveMode : Forward")
         MotorDrive(PIN_L1, PIN_L2, g_percentage);
         MotorDrive(PIN_R1, PIN_R2, g_percentage);
-    elif mode == "2":
+    elif mode == 2:
         webiopi.debug("ChangeDriveMode : Backward")
         MotorDrive(PIN_L1, PIN_L2, -g_percentage);
         MotorDrive(PIN_R1, PIN_R2, -g_percentage);
-    elif mode == "3":
+    elif mode == 3:
         webiopi.debug("ChangeDriveMode : CW")
         MotorDrive(PIN_L1, PIN_L2, g_percentage);
         MotorDrive(PIN_R1, PIN_R2, -g_percentage);
-    elif mode == "4":
+    elif mode == 4:
         webiopi.debug("ChangeDriveMode : CCW")
         MotorDrive(PIN_L1, PIN_L2, -g_percentage);
         MotorDrive(PIN_R1, PIN_R2, g_percentage);
@@ -62,9 +62,9 @@ def ChangeDriveMode(mode):
 
 @webiopi.macro
 def ChangeVoltageLevel(level):
-    webiopi.debug("ChangeVoltageLevel : %s" % (level))
+    webiopi.debug("ChangeVoltageLevel : %d" % level)
     global g_percentage
-    g_percentage = 10 * int(level)
+    g_percentage = 10 * level
     ChangeDriveMode(g_mode)
 
 class Server(WebSocket):
@@ -72,15 +72,15 @@ class Server(WebSocket):
         print(self.data)
         str = self.data.strip()
         if str == 'stop':
-            ChangeDriveMode('0')
+            ChangeDriveMode(0)
         elif str == 'forward':
-            ChangeDriveMode('1')
+            ChangeDriveMode(1)
         elif str == 'back':
-            ChangeDriveMode('2')
+            ChangeDriveMode(2)
         elif str == 'right':
-            ChangeDriveMode('3')
+            ChangeDriveMode(3)
         elif str == 'left':
-            ChangeDriveMode('4')
+            ChangeDriveMode(4)
         elif str == 'list':
             self.sendMessage(''.join(open('./menu.json', 'r').readlines()))
             return
@@ -95,8 +95,8 @@ class Server(WebSocket):
     def handleClose(self):
         print(self.address, 'closed')
 
-ChangeDriveMode("0")
-ChangeVoltageLevel("5")
+ChangeDriveMode(0)
+ChangeVoltageLevel(5)
 
 if 2 <= len(sys.argv):
     port = int(sys.argv[1])
