@@ -35,7 +35,6 @@ def MotorDrive(iIn1Pin, iIn2Pin, percentage):
         GPIO.pwmWrite(iIn1Pin, 0.0)
         GPIO.pwmWrite(iIn2Pin, -percentage * 0.01)
 
-@webiopi.macro
 def ChangeDriveMode(mode):
     if mode == 0:
         webiopi.debug("ChangeDriveMode : Stop")
@@ -60,7 +59,6 @@ def ChangeDriveMode(mode):
     global g_mode
     g_mode = mode
 
-@webiopi.macro
 def ChangeVoltageLevel(level):
     webiopi.debug("ChangeVoltageLevel : %d" % level)
     global g_percentage
