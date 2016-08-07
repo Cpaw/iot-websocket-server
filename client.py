@@ -18,6 +18,6 @@ while str != '':
     print("# Receiving...")
     result =  ws.recv()
     print(result)
-    embed()
+    # embed()
 
 ws.close()
