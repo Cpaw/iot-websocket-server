@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 from SimpleWebSocketServer import SimpleWebSocketServer, WebSocket
 import sys
-import webiopi
+import _webiopi.GPIO
 import json
-
-webiopi.setDebug()
 
 PIN_L1 = 6
 PIN_L2 = 13
@@ -14,7 +12,7 @@ PIN_R2 = 26
 g_mode = 0
 g_percentage = 50
 
-GPIO = webiopi.GPIO
+GPIO = _webiopi.GPIO
 GPIO.setFunction(PIN_L1, GPIO.PWM)
 GPIO.setFunction(PIN_L2, GPIO.PWM)
 GPIO.setFunction(PIN_R1, GPIO.PWM)
@@ -37,30 +35,30 @@ def MotorDrive(iIn1Pin, iIn2Pin, percentage):
 
 def ChangeDriveMode(mode):
     if mode == 0:
-        webiopi.debug("ChangeDriveMode : Stop")
+        print("ChangeDriveMode : Stop")
         MotorDrive(PIN_L1, PIN_L2, 0);
         MotorDrive(PIN_R1, PIN_R2, 0);
     elif mode == 1:
-        webiopi.debug("ChangeDriveMode : Forward")
+        print("ChangeDriveMode : Forward")
         MotorDrive(PIN_L1, PIN_L2, g_percentage);
         MotorDrive(PIN_R1, PIN_R2, g_percentage);
     elif mode == 2:
-        webiopi.debug("ChangeDriveMode : Backward")
+        print("ChangeDriveMode : Backward")
         MotorDrive(PIN_L1, PIN_L2, -g_percentage);
         MotorDrive(PIN_R1, PIN_R2, -g_percentage);
     elif mode == 3:
-        webiopi.debug("ChangeDriveMode : CW")
+        print("ChangeDriveMode : CW")
         MotorDrive(PIN_L1, PIN_L2, g_percentage);
         MotorDrive(PIN_R1, PIN_R2, -g_percentage);
     elif mode == 4:
-        webiopi.debug("ChangeDriveMode : CCW")
+        print("ChangeDriveMode : CCW")
         MotorDrive(PIN_L1, PIN_L2, -g_percentage);
         MotorDrive(PIN_R1, PIN_R2, g_percentage);
     global g_mode
     g_mode = mode
 
 def ChangeVoltageLevel(level):
-    webiopi.debug("ChangeVoltageLevel : %d" % level)
+    print("ChangeVoltageLevel : %d" % level)
     global g_percentage
     g_percentage = 10 * level
     ChangeDriveMode(g_mode)
