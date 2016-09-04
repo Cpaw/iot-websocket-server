@@ -77,9 +77,6 @@ class Server(WebSocket):
             ChangeDriveMode(3)
         elif str == 'left':
             ChangeDriveMode(4)
-        elif str == 'list':
-            self.sendMessage(''.join(open('./menu.json', 'r').readlines()))
-            return
         else:
             self.sendMessage('Command not found: ' + str)
             return
