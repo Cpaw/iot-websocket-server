@@ -10,10 +10,10 @@ for n in data:
 
 while True:
     for n in data:
-        n[2] = GPIO.digitalRead(n[0])
-        if n[1] == 0 and n[2] == True:
+        status = GPIO.digitalRead(n[0])
+        if n[1] == 0 and status:
             n[1] = 1
-        elif n[1] == 1 and n[2] == False:
+        elif n[1] == 1 and not status:
             n[1] = 2
         elif n[1] == 2:
             n[1] = 0
